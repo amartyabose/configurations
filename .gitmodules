@@ -1,0 +1,6 @@
+[submodule "spacemacs_config/spacemacs"]
+	path = spacemacs_config/spacemacs
+	url = https://github.com/syl20bnr/spacemacs
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
