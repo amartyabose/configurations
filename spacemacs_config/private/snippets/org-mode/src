@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : src
+#key : src
+#contributor : Amartya Bose
+# --
+#+BEGIN_SRC $1
+  $2
+#+END_SRC
