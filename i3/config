@@ -1,0 +1,209 @@
+for_window [class="^.*"] border pixel 0
+gaps inner 10
+gaps outer 0
+smart_gaps on
+smart_borders on
+
+# Basic settings {{{
+set $mod Mod4
+set $alt Mod1
+floating_modifier $mod
+set $term xfce4-terminal --maximize --hide-menubar --hide-borders
+set $browser firefox-bin
+set $file_browser thunar
+set $screencast  ffmpeg -y -f x11grab -video_size 1280x800 -i :0.0 -f alsa -i default -c:v ffvhuff -r 30 -c:a flac output.mkv
+set $audio ffmpeg -f alsa -i default -c:a flac -y output.flac
+# font pango: Source Code Pro 11
+font pango: Garamond Premier Pro 11
+# }}}
+
+# Startup applications {{{
+exec ~/.screenlayout/dualmonitor.sh &
+exec --no-startup-id nm-applet
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id clementine
+# }}}
+
+# Polybar Launch Script && Compositing {{{
+exec_always --no-startup-id compton
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+# }}}
+
+bindsym $mod+Return 		exec $term
+bindsym $mod+Shift+Return 	exec $term -e tmux
+
+# toggle tiling / floating
+bindsym $mod+Shift+space 	floating toggle
+# change focus between tiling / floating windows
+bindsym $mod+space		    focus mode_toggle
+bindsym $mod+Control+space   exec --no-startup-id change_keyboard.sh
+
+bindsym $mod+Escape		    exec --no-startup-id xset -display :0.0 dpms force off
+bindsym $mod+Shift+Escape 	exec i3-msg exit
+
+bindsym $mod+Shift+BackSpace	exec reboot
+
+# Letter Keys {{{
+
+bindsym $mod+q		    kill
+bindsym $mod+Shift+q	kill
+
+# Layouts {{{
+bindsym $mod+s layout stacking
+bindsym $mod+e layout default
+bindsym $mod+w layout tabbed
+# }}}
+
+# Applications {{{
+bindsym $mod+d          exec rofi -show drun -show-icons -modi drun -font "Source Code Pro Bold 12"
+bindsym $mod+Shift+f    exec --no-startup-id $file_browser
+bindsym $mod+i 		    exec $term -e htop
+bindsym $mod+m          exec --no-startup-id mathematica
+bindsym $mod+Shift+w	exec --no-startup-id $browser
+bindsym $mod+Shift+x    exec ~/.config/i3/lock.sh
+# }}
+
+bindsym $mod+Shift+r	restart
+bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
+bindsym $mod+Shift+u	resize shrink height 10 px or 10 ppt
+bindsym $mod+Shift+i	resize grow height 10 px or 10 ppt
+bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
+
+# i3 Window management {{{
+bindsym $mod+f      fullscreen toggle
+bindsym $mod+t		split toggle
+bindsym $mod+z      split vertical
+bindsym $mod+x      split horizontal
+bindsym $mod+p      focus parent
+bindsym $mod+c      focus child
+# }}}
+
+# Move windows {{{
+bindsym $mod+h		focus left
+bindsym $mod+j		focus down
+bindsym $mod+k		focus up
+bindsym $mod+l		focus right
+
+bindsym $mod+Shift+h	move left
+bindsym $mod+Shift+j	move down
+bindsym $mod+Shift+k	move up
+bindsym $mod+Shift+l	move right
+# }}
+
+bindsym $mod+Shift+c	reload
+
+# }}}
+
+# function Buttons {{{
+bindsym F1		exec --no-startup-id echo "help" > /dev/null
+# bindsym F2
+# bindsym F3
+# bindsym F4
+# bindsym F5
+# bindsym F6
+# bindsym F7
+# bindsym F8
+# bindsym F9
+# bindsym F10
+bindsym F11		fullscreen toggle
+# bindsym F12
+
+bindsym $mod+F1     exec --no-startup-id ~/.screenlayout/lappy.sh &
+bindsym $mod+F2     exec --no-startup-id ~/.screenlayout/dualmonitor.sh &
+bindsym $mod+F3		exec arandr
+bindsym $mod+F4		exec sudo systemctl suspend
+bindsym $mod+F5		exec sudo systemctl restart NetworkManager
+# bindsym $mod+F6
+# bindsym $mod+F7     exec --no-startup-id ~/.screenlayout/lappy.sh &
+# bindsym $mod+F8     exec --no-startup-id ~/.screenlayout/dualmonitor.sh &
+bindsym $mod+F9		exec --no-startup-id sudo bash ~/.config/i3/mount.sh
+bindsym $mod+F10	exec --no-startup-id sudo bash ~/.config/i3/unmount.sh
+# bindsym $mod+F11	
+# bindsym $mod+F12
+# }}
+
+# Arrow Keys {{{
+bindsym $mod+Left	     focus left
+bindsym $mod+Down	     focus down
+bindsym $mod+Up		     focus up
+bindsym $mod+Right 	     focus right
+bindsym $mod+Shift+Left	 move left
+bindsym $mod+Shift+Down	 move down
+bindsym $mod+Shift+Up	 move up
+bindsym $mod+Shift+Right move right
+# }}
+
+# Workspaces {{{
+
+workspace 1 output eDP1
+workspace 2 output eDP1
+workspace 3 output eDP1
+workspace 4 output HDMI2
+workspace 5 output HDMI2
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1	move container to workspace 1
+bindsym $mod+Shift+2	move container to workspace 2
+bindsym $mod+Shift+3	move container to workspace 3
+bindsym $mod+Shift+4	move container to workspace 4
+bindsym $mod+Shift+5	move container to workspace 5
+bindsym $mod+Shift+6	move container to workspace 6
+bindsym $mod+Shift+7	move container to workspace 7
+bindsym $mod+Shift+8	move container to workspace 8
+bindsym $mod+Shift+9	move container to workspace 9
+bindsym $mod+Shift+0	move container to workspace 10
+
+bindsym $mod+u                  [urgent=latest] focus
+bindsym $mod+Tab                workspace back_and_forth
+bindsym $mod+Shift+minus        move scratchpad
+bindsym $mod+Control+minus      scratchpad show
+
+assign [class="^Firefox$"] 2
+assign [class="^Evince$"] 4
+assign [class="^Vlc"] 5
+assign [class="^Clementine$"] 5
+assign [class="^mpv$"] 5
+assign [class="^Mendeleydesktop$"] 4
+
+# }}
+
+# Media {{{
+
+bindsym Print               exec --no-startup-id scrot $HOME/Pictures/Screenshots/`date +%Y-%m-%d_%H:%M:%S`.png
+bindsym Shift+Print         exec --no-startup-id scrot -u $HOME/Pictures/Screenshots/`date +%Y-%m-%d_%H:%M:%S`.png
+bindsym $alt+Shift+Print    exec --no-startup-id scrot -s $HOME/Pictures/Screenshots/`date +%Y-%m-%d_%H:%M:%S`.png
+bindsym $mod+Print          exec --no-startup-id $screencast
+bindsym $mod+Shift+Print    exec --no-startup-id killall ffmpeg
+
+bindsym $mod+Scroll_Lock    exec --no-startup-id $audio
+
+bindsym XF86Launch1             exec --no-startup-id scrot
+bindsym Shift+XF86Launch1       exec --no-startup-id scrot -u
+bindsym $mod+XF86Launch1        exec --no-startup-id $screencast
+bindsym $mod+Shift+XF86Launch1  exec --no-startup-id killall ffmpeg
+
+bindsym XF86AudioStop       exec --no-startup-id clementine --stop
+bindsym XF86AudioPlay       exec --no-startup-id clementine --play-pause
+bindsym XF86AudioNext       exec --no-startup-id clementine --next
+bindsym XF86AudioPrev       exec --no-startup-id clementine --previous
+
+bindsym XF86AudioRaiseVolume	exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume	exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute  	        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# }}
+
+# vim: fdm=marker
+# vim: filetype=i3config
