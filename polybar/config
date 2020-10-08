@@ -16,26 +16,22 @@
 ;
 ;==========================================================
 
+include-file = /home/amartya/.cache/wal/polybar-colors.ini
+
 [colors]
-;background = ${xrdb:color0:#222}
-; background = #222
-background = #33000000
-background-alt = #33505050
-;foreground = ${xrdb:color7:#222}
-foreground = #eeeeee
-foreground-alt = #eeeeee
-; primary = #ffb52a
-primary = #4863A0
-secondary = #e60053
+background = ${wal.background}
+background-alt = ${wal.background}
+foreground = ${xrdb:color15}
+foreground-alt = ${xrdb:color14}
+
+;primary = #4863A0
+primary = ${xrdb:color1}
+secondary = ${xrdb:color2}
 alert = #bd2c40
 
-[bar/example]
-;monitor = ${env:MONITOR:HDMI-1}
+[bar/i3wm]
 width = 100%
 height = 27
-;offset-x = 1%
-;offset-y = 1%
-;radius = 6.0
 radius = 0.0
 fixed-center = false
 
@@ -45,7 +41,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 4
+border-size = 0
 border-color = #00000000
 
 padding-left = 0
@@ -61,8 +57,8 @@ font-3 = Font Awesome 5 Brands:pixelsize=12:2
 
 modules-left = i3
 modules-center = xwindow
-modules-right = filesystem xbacklight alsa memory cpu temperature date
-; separator = |
+modules-right = filesystem backlight-acpi alsa memory cpu temperature date
+separator = |
 
 tray-position = right
 tray-padding = 2
@@ -84,7 +80,7 @@ interval = 25
 mount-0 = /
 mount-1 = /home
 
-label-mounted =  %mountpoint% %free%
+label-mounted =  %mountpoint%: %free%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -198,7 +194,7 @@ type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
+format-underline = ${xrdb:color6}
 label = %percentage:2%%
 
 [module/memory]
@@ -206,7 +202,7 @@ type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-underline = ${xrdb:color4}
 label = %percentage_used%%
 
 [module/wlan]
@@ -215,7 +211,7 @@ interface =
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+format-connected-underline = ${xrdb:color4}
 label-connected = %essid%
 
 format-disconnected =
@@ -224,11 +220,11 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
+;ramp-signal-0 = 
+;ramp-signal-1 = 
+;ramp-signal-2 = 
+;ramp-signal-3 = 
+;ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
@@ -259,7 +255,7 @@ time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = ${xrdb:color10}
 
 label = %date% %time%
 
@@ -334,22 +330,22 @@ format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
+;ramp-capacity-0 = 
+;ramp-capacity-1 = 
+;ramp-capacity-2 = 
+;ramp-capacity-foreground = ${colors.foreground-alt}
+;
+;animation-charging-0 = 
+;animation-charging-1 = 
+;animation-charging-2 = 
+;animation-charging-foreground = ${colors.foreground-alt}
+;animation-charging-framerate = 750
+;
+;animation-discharging-0 = 
+;animation-discharging-1 = 
+;animation-discharging-2 = 
+;animation-discharging-foreground = ${colors.foreground-alt}
+;animation-discharging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
@@ -357,7 +353,7 @@ thermal-zone = 0
 warn-temperature = 60
 
 format =  <ramp> <label>
-format-underline = #f50a4d
+format-underline = ${xrdb:color8}
 format-warn =  <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
@@ -365,9 +361,8 @@ label = %temperature-c%
 label-warn = %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
+ramp-0 = 
+ramp-1 = 
 ramp-foreground = ${colors.foreground-alt}
 
 [module/powermenu]
@@ -408,7 +403,7 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 0
+margin-bottom = 0
 
 ; vim:ft=dosini

@@ -1,26 +1,24 @@
 for_window [class="^.*"] border pixel 0
 gaps inner 10
 gaps outer 0
-smart_gaps on
 smart_borders on
 
 # Basic settings {{{
 set $mod Mod4
-set $alt Mod1
+set $alt Mod
 floating_modifier $mod
 set $term xfce4-terminal --maximize --hide-menubar --hide-borders
 set $browser firefox-bin
 set $file_browser thunar
 set $screencast  ffmpeg -y -f x11grab -video_size 1280x800 -i :0.0 -f alsa -i default -c:v ffvhuff -r 30 -c:a flac output.mkv
 set $audio ffmpeg -f alsa -i default -c:a flac -y output.flac
-# font pango: Source Code Pro 11
 font pango: Garamond Premier Pro 11
 # }}}
 
 # Startup applications {{{
-exec ~/.screenlayout/dualmonitor.sh &
+# exec ~/.screenlayout/dualmonitor.sh &
+exec --no-startup-id wal -R
 exec --no-startup-id nm-applet
-exec --no-startup-id nitrogen --restore
 exec --no-startup-id clementine
 # }}}
 
@@ -45,7 +43,6 @@ bindsym $mod+Shift+BackSpace	exec reboot
 
 # Letter Keys {{{
 
-bindsym $mod+q		    kill
 bindsym $mod+Shift+q	kill
 
 # Layouts {{{
@@ -55,13 +52,15 @@ bindsym $mod+w layout tabbed
 # }}}
 
 # Applications {{{
-bindsym $mod+d          exec rofi -show drun -show-icons -modi drun -font "Source Code Pro Bold 12"
+bindsym $mod+d          exec rofi -show drun -show-icons -modi drun -font "Source Code Pro Bold 12" -theme "~/.cache/wal/colors-rofi-dark-transparent.rasi"
+bindsym $mod+Tab        exec rofi -show window -show-icons -font "Source Code Pro Bold 12" -theme "~/.cache/wal/colors-rofi-dark-transparent.rasi"
 bindsym $mod+Shift+f    exec --no-startup-id $file_browser
 bindsym $mod+i 		    exec $term -e htop
+bindsym $mod+f 		    exec $term -e ~/.config/i3/ranger.sh
 bindsym $mod+m          exec --no-startup-id mathematica
 bindsym $mod+Shift+w	exec --no-startup-id $browser
 bindsym $mod+Shift+x    exec ~/.config/i3/lock.sh
-# }}
+# }}}
 
 bindsym $mod+Shift+r	restart
 bindsym $mod+Shift+y	resize shrink width 10 px or 10ppt
@@ -70,10 +69,11 @@ bindsym $mod+Shift+i	resize grow height 10 px or 10 ppt
 bindsym $mod+Shift+o	resize grow width 10 px or 10 ppt
 
 # i3 Window management {{{
-bindsym $mod+f      fullscreen toggle
 bindsym $mod+t		split toggle
-bindsym $mod+z      split vertical
-bindsym $mod+x      split horizontal
+bindsym $mod+Control+Down      split vertical
+bindsym $mod+Control+Right      split horizontal
+bindsym $mod+Control+j      split vertical
+bindsym $mod+Control+l      split horizontal
 bindsym $mod+p      focus parent
 bindsym $mod+c      focus child
 # }}}
@@ -88,39 +88,23 @@ bindsym $mod+Shift+h	move left
 bindsym $mod+Shift+j	move down
 bindsym $mod+Shift+k	move up
 bindsym $mod+Shift+l	move right
-# }}
+# }}}
 
 bindsym $mod+Shift+c	reload
 
 # }}}
 
-# function Buttons {{{
-bindsym F1		exec --no-startup-id echo "help" > /dev/null
-# bindsym F2
-# bindsym F3
-# bindsym F4
-# bindsym F5
-# bindsym F6
-# bindsym F7
-# bindsym F8
-# bindsym F9
-# bindsym F10
+# Function Buttons {{{
+bindsym F1      exec --no-startup-id compton -b
+bindsym F2      exec --no-startup-id killall -q compton
 bindsym F11		fullscreen toggle
-# bindsym F12
 
 bindsym $mod+F1     exec --no-startup-id ~/.screenlayout/lappy.sh &
 bindsym $mod+F2     exec --no-startup-id ~/.screenlayout/dualmonitor.sh &
 bindsym $mod+F3		exec arandr
-bindsym $mod+F4		exec sudo systemctl suspend
-bindsym $mod+F5		exec sudo systemctl restart NetworkManager
-# bindsym $mod+F6
-# bindsym $mod+F7     exec --no-startup-id ~/.screenlayout/lappy.sh &
-# bindsym $mod+F8     exec --no-startup-id ~/.screenlayout/dualmonitor.sh &
 bindsym $mod+F9		exec --no-startup-id sudo bash ~/.config/i3/mount.sh
 bindsym $mod+F10	exec --no-startup-id sudo bash ~/.config/i3/unmount.sh
-# bindsym $mod+F11	
-# bindsym $mod+F12
-# }}
+# }}}
 
 # Arrow Keys {{{
 bindsym $mod+Left	     focus left
@@ -131,7 +115,7 @@ bindsym $mod+Shift+Left	 move left
 bindsym $mod+Shift+Down	 move down
 bindsym $mod+Shift+Up	 move up
 bindsym $mod+Shift+Right move right
-# }}
+# }}}
 
 # Workspaces {{{
 
@@ -166,18 +150,18 @@ bindsym $mod+Shift+9	move container to workspace 9
 bindsym $mod+Shift+0	move container to workspace 10
 
 bindsym $mod+u                  [urgent=latest] focus
-bindsym $mod+Tab                workspace back_and_forth
+# bindsym $mod+Tab                workspace back_and_forth
 bindsym $mod+Shift+minus        move scratchpad
 bindsym $mod+Control+minus      scratchpad show
 
 assign [class="^Firefox$"] 2
 assign [class="^Evince$"] 4
-assign [class="^Vlc"] 5
+assign [class="vlc"] 5
 assign [class="^Clementine$"] 5
 assign [class="^mpv$"] 5
 assign [class="^Mendeleydesktop$"] 4
 
-# }}
+# }}}
 
 # Media {{{
 
@@ -203,7 +187,7 @@ bindsym XF86AudioRaiseVolume	exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume	exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute  	        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-# }}
+# }}}
 
 # vim: fdm=marker
 # vim: filetype=i3config
